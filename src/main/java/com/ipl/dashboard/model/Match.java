@@ -13,7 +13,7 @@ public class Match {
     private long id;
     private String city;
     private LocalDate date;
-    private String playerOfmatch;
+    private String playerOfMatch;
     private String venue;
     private String team1;
     private String team2;

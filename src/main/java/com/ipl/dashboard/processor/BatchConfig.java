@@ -54,8 +54,8 @@ public class BatchConfig {
     @Bean
     public JdbcBatchItemWriter<Match> writer(DataSource dataSource){
         return new JdbcBatchItemWriterBuilder<Match>().itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO MATCH (id,city,date,player_of_match, venue,team1,team2,toss_winner,toss_decision,match_winner,result,result_margin,umpire1,umpire2)" +
-                        ":id,:city,:date,:playerOfmatch, :venue,:team1,:team2,:tossWinner,:tossDecision,:matchWinner,:result,:resultMargin,:umpire1,:umpire2").dataSource(dataSource).build();
+                .sql("INSERT INTO MATCH (id,city,date,player_of_match, venue,team1,team2,toss_winner,toss_decision,match_winner,result,result_margin,umpire1,umpire2) values " +
+                        "(:id,:city,:date,:playerOfMatch, :venue,:team1,:team2,:tossWinner,:tossDecision,:matchWinner,:result,:resultMargin,:umpire1,:umpire2)").dataSource(dataSource).build();
     }
 
     @Bean
@@ -63,6 +63,7 @@ public class BatchConfig {
         return jobBuilderFactory.get("importUserJob").incrementer(new RunIdIncrementer()).listener(listener).flow(step1).end().build();
     }
 
+    @Bean
     public Step step1(JdbcBatchItemWriter<Match> writer){
         return stepBuilderFactory.get("step1").<MatchInput, Match>chunk(10).reader(reader()).processor(processor())
                 .writer(writer).build();
