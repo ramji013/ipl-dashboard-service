@@ -38,7 +38,7 @@ public class MatchDataProcessor implements ItemProcessor<MatchInput, Match> {
         match.setResultMargin(matchInput.getResult_margin());
         match.setUmpire1(matchInput.getUmpire1());
         match.setUmpire2(matchInput.getUmpire2());
-
+        match.setMatchWinner(matchInput.getWinner());
         return match;
     }
 }
