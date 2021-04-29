@@ -3,10 +3,8 @@ package com.ipl.dashboard.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +16,8 @@ public class Team {
     private String teamName;
     private long totalMatches;
     private long totalWins;
+    @Transient
+    private List<Match> matches;
 
     public Team(String teamName, long id){
         this.teamName = teamName;

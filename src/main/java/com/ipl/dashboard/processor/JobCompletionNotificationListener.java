@@ -18,19 +18,20 @@ import java.util.Map;
 @Component
 public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
+    private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
+
     private final EntityManager em;
 
     @Autowired
-    public JobCompletionNotificationListener(EntityManager em){
+    public JobCompletionNotificationListener(EntityManager em) {
         this.em = em;
     }
 
     @Override
-   @Transactional
-    public void afterJob(JobExecution jobExecution){
+    @Transactional
+    public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-            logger.info("!!! JOB FINISHED! Time to verify the results");
+            log.info("!!! JOB FINISHED! Time to verify the results");
 
             Map<String, Team> teamData = new HashMap<>();
 
@@ -59,6 +60,5 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
             teamData.values().forEach(team -> em.merge(team));
             teamData.values().forEach(team -> System.out.println(team));
         }
-
     }
 }
