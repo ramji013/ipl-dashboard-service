@@ -33,4 +33,9 @@ public class TeamController {
         LocalDate endDate = LocalDate.of(year+1, 1,1);
         return matchRepository.getMatchesByTeamsBetweenDates(teamName,startDate, endDate);
     }
+
+    @GetMapping("/team")
+    public Iterable<Team> getAllTeam(){
+        return teamRepository.findAll();
+    }
 }
